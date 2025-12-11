@@ -1,0 +1,40 @@
+#
+#
+#
+#path: ../datasets/VEDIA # dataset root dir
+#train: images/train
+#val: images/val
+#test:  # test images (optional)
+#
+#
+##names: ['Car', 'Truck', 'Boat', 'Tractor', 'Camping (Van)', 'Pickup', 'Plane', Others, 'Vans']
+#
+#names:
+#  0: Car
+#  1: Truck
+#  2: Boat
+#  3: Tractor
+#  4: Camping
+#  5: Pickup
+#  6: Plane
+#  7: Others
+#  8: Vans
+#
+#
+# 以下是修改后的配置，使用了绝对路径
+path: D:\yolo\ultralytics-main\ultralytics\models\yolo\detect\datasets\VEDIA  # dataset root dir
+train: images/train  # 相对于path的路径
+val: images/val     # 相对于path的路径
+test:  # test images (optional)，如果需要指定，可以添加绝对路径或相对于path的路径
+
+# 类别名称和对应的数字ID
+names:
+  0: Car
+  1: Truck
+  2: Boat
+  3: Tractor
+  4: Camping
+  5: Pickup
+  6: Plane
+  7: Others
+  8: Vans

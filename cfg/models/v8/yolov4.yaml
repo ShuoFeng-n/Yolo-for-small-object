@@ -1,0 +1,44 @@
+# YOLOv4 模型配置文件
+# 参数设置
+nc: 9  # 类别数量，根据您的数据集进行调整
+depth_multiple: 1.0  # 模型深度倍率
+width_multiple: 1.0  # 模型宽度倍率
+
+# Anchor 设置
+anchors:
+  - [12,16, 19,36, 40,28]  # P3/8
+  - [36,75, 76,55, 72,146]  # P4/16
+  - [142,110, 192,243, 459,401]  # P5/32
+
+# YOLOv4 主干网络
+backbone:
+  # [from, number, module, args]
+  [[-1, 1, Conv, [32, 3, 1]],
+   [-1, 1, Conv, [64, 3, 2]],
+   [-1, 2, BottleneckCSP, [64]],
+   [-1, 1, Conv, [128, 3, 2]],
+   [-1, 8, BottleneckCSP, [128]],
+   [-1, 1, Conv, [256, 3, 2]],
+   [-1, 8, BottleneckCSP, [256]],
+   [-1, 1, Conv, [512, 3, 2]],
+   [-1, 4, BottleneckCSP, [512]],
+   [-1, 1, SPP, [512, [5, 9, 13]]],
+   [-1, 4, BottleneckCSP, [512, False]]]  # 输出特征层
+
+# YOLOv4 头部网络
+head:
+  [[-1, 1, Conv, [256, 1, 1]],
+   [-1, 1, nn.Upsample, [None, 2, 'nearest']],
+   [[-1, 6], 1, Concat, [1]],
+   [-1, 2, BottleneckCSP, [256, False]],
+   [-1, 1, Conv, [128, 1, 1]],
+   [-1, 1, nn.Upsample, [None, 2, 'nearest']],
+   [[-1, 4], 1, Concat, [1]],
+   [-1, 2, BottleneckCSP, [128, False]],
+   [-1, 1, Conv, [256, 3, 2]],
+   [[-1, 14], 1, Concat, [1]],
+   [-1, 2, BottleneckCSP, [256, False]],
+   [-1, 1, Conv, [512, 3, 2]],
+   [[-1, 10], 1, Concat, [1]],
+   [-1, 2, BottleneckCSP, [512, False]],
+   [[17, 20, 23], 1, Detect, [nc, anchors]]]  # 检测层
